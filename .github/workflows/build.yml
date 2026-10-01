@@ -1,27 +1,36 @@
-name: Makefile CI
+name: Build AirDrop17
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: configure
-      run: ./configure
+      - name: Install Theos
+        uses: theos/theos-action@v1
+        with:
+          theos-dir: ${{ github.workspace }}/theos
 
-    - name: Install dependencies
-      run: make
+      - name: Build rootless Debian package
+        run: |
+          export THEOS=${{ github.workspace }}/theos
+          make clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
-    - name: Run check
-      run: make check
+      - name: Find package
+        run: |
+          echo "Built packages:"
+          find packages -type f -name "*.deb" -print
 
-    - name: Run distcheck
-      run: make distcheck
+      - name: Upload DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: AirDrop17-deb
+          path: packages/*.deb
