@@ -1,0 +1,3 @@
+SOURCE PROJECT — NOT A PRECOMPILED .DEB
+
+This project is source-ready for a rootless Theos build. A real .deb requires an iOS SDK/toolchain, so no fake binary package is included.

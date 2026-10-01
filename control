@@ -1,0 +1,9 @@
+Package: com.nxfay.airdrop17
+Name: AirDrop17
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: iOS 17-style AirDrop visual layer for iOS 16 Dopamine/rootless devices.
+Maintainer: AirDrop17 Project
+Author: AirDrop17 Project
+Section: Tweaks
+Depends: mobilesubstrate
